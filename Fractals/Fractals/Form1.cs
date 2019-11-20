@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using System.Collections.Generic;
 
 using Fractals.Templates;
+using System.Drawing.Drawing2D;
 
 namespace Fractals
 {
@@ -87,13 +88,13 @@ namespace Fractals
             lengthUI[0].XInput.ValueChanged += (ctx, args) => 
             {
                 UpdateLastFractal(LastFractal);
-                Draw(LastFractal);
+                Draw(LastFractal, LineChecker.Checked);
             };
 
             lengthUI[0].YInput.ValueChanged += (ctx, args) =>
             {
                 UpdateLastFractal(LastFractal);
-                Draw(LastFractal);
+                Draw(LastFractal, LineChecker.Checked);
             };
         }
 
@@ -106,25 +107,31 @@ namespace Fractals
         private void Scale_ValueChanged(object sender, EventArgs e)
         {
             UpdateLastFractal(LastFractal);
-            Draw(LastFractal);
+            Draw(LastFractal, LineChecker.Checked);
         }
 
         private void PointCount_ValueChanged(object sender, EventArgs e)
         {
             UpdateLastFractal(LastFractal);
-            Draw(LastFractal);
+            Draw(LastFractal, LineChecker.Checked);
         }
 
         private void DX_ValueChanged(object sender, EventArgs e)
         {
             UpdateLastFractal(LastFractal);
-            Draw(LastFractal);
+            Draw(LastFractal, LineChecker.Checked);
         }
 
         private void DY_ValueChanged(object sender, EventArgs e)
         {
             UpdateLastFractal(LastFractal);
-            Draw(LastFractal);
+            Draw(LastFractal, LineChecker.Checked);
+        }
+
+        private void LineChecker_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateLastFractal(LastFractal);
+            Draw(LastFractal, LineChecker.Checked);
         }
 
         private void BuildButton_Click(object sender, EventArgs e)
@@ -133,48 +140,87 @@ namespace Fractals
                                                                              Convert.ToDouble(UI.YInput.Value))).ToArray(),
                                                       Convert.ToDouble(FractalCoeff.Value), Convert.ToInt32(PointCount.Value));
             LastFractal = fractal;
-            Draw(fractal);
+            Draw(fractal, LineChecker.Checked);
         }
 
         private void BransleyFractal_Click(object sender, EventArgs e)
         {
-            BransleyParamsForm bransleyParams = new BransleyParamsForm(Convert.ToInt32(PointCount.Value),
-                                                                       Convert.ToDouble(lengthUI[0].XInput.Value),
-                                                                       Convert.ToDouble(lengthUI[0].YInput.Value));
+            BransleyParamsForm bransleyParams = new BransleyParamsForm(Convert.ToInt32(PointCount.Value));
             bransleyParams.ShowDialog();
 
             LastFractal = bransleyParams.Result;
-            Draw(LastFractal);
+            Draw(LastFractal, LineChecker.Checked);
         }
 
         private void UpdateLastFractal(Fractal fractal)
         {
+            if (fractal == null)
+                return;
+
             fractal.Reset();
             fractal.PointCount = Convert.ToInt32(PointCount.Value);
         }
 
-        private void Draw(Fractal fractal)
+        private void Draw(Fractal fractal, bool line)
         {
             if (fractal == null)
                 return;
 
+            Pen pen = new Pen(Color.Green, 1.0f);
             float dx = Convert.ToSingle(DX.Value);
             float dy = Convert.ToSingle(DY.Value);
             float scale = Convert.ToSingle(Scale.Value);
             Bitmap bmp = new Bitmap(Canvas.Width, Canvas.Height);
+            (int x, int y) prev = ((int)(fractal.X * scale + dx), (int)(fractal.Y * scale + dy));
 
-            while (fractal.HasNext())
+            using (Graphics G = Graphics.FromImage(bmp))
             {
-                (double x, double y) = fractal.GetNextPoint();
-                (int xr, int yr) = ((int)(x * scale + dx), (int)(y * scale + dy));
+                int i = -1;
+                PathData path = new PathData();
+                path.Points = new PointF[fractal.PointCount];
+                path.Types = new byte[fractal.PointCount];
+                path.Types[0] = (byte)PathPointType.Start;
 
-                if (xr < 0 || xr >= bmp.Width || yr < 0 || yr >= bmp.Height)
-                    continue;
+                while (fractal.HasNext())
+                {
+                    (double x, double y) p = fractal.GetNextPoint();
+                    (int xr, int yr) = ((int)(p.x * scale + dx), (int)(p.y * scale + dy));
 
-                bmp.SetPixel(xr, yr, Color.Green);
+                    if (xr < 0 || xr >= bmp.Width || yr < 0 || yr >= bmp.Height)
+                        continue;
+
+                    prev = (xr, yr);
+
+                    if (line)
+                    {
+                        path.Points[++i] = new PointF(xr, yr);
+                        path.Types[i] = (byte)PathPointType.Line;
+                    }
+                    else
+                        bmp.SetPixel(xr, yr, Color.Green);
+                }
+
+                if (line && i > 0)
+                {
+                    PointF[] pts = new PointF[i];
+                    byte[] types = new byte[i];
+
+                    Array.Copy(path.Points, pts, i);
+                    Array.Copy(path.Types, types, i);
+
+                    G.DrawPath(pen, new GraphicsPath(pts, types));
+                    G.Save();
+                    bmp.Save(Environment.CurrentDirectory + "/koch.png");
+                }
             }
 
             Canvas.Image = bmp;
+        }
+
+        private void KochFractal_Click(object sender, EventArgs e)
+        {
+            LastFractal = new KochFractal(Convert.ToInt32(PointCount.Value), Math.PI / 4, 0.0, 1, 0.0, 0, 200, 300, 200);
+            Draw(LastFractal, true);
         }
     }
 }

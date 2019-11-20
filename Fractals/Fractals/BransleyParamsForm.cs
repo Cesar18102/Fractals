@@ -10,10 +10,10 @@ namespace Fractals
     {
         public BransleyFractal Result { get; private set; }
 
-        public BransleyParamsForm(int pointCount, double x, double y)
+        public BransleyParamsForm(int pointCount)
         {
             InitializeComponent();
-            Result = new BransleyFractal(pointCount, x, y);
+            Result = new BransleyFractal(pointCount, 0, 0);
         }
 
         private void OK_Click(object sender, EventArgs e)

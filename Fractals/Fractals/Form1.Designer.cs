@@ -30,6 +30,13 @@
         {
             this.Canvas = new System.Windows.Forms.PictureBox();
             this.SettingsPanel = new System.Windows.Forms.Panel();
+            this.DY = new System.Windows.Forms.NumericUpDown();
+            this.dYLabel = new System.Windows.Forms.Label();
+            this.DX = new System.Windows.Forms.NumericUpDown();
+            this.dXLabel = new System.Windows.Forms.Label();
+            this.Scale = new System.Windows.Forms.NumericUpDown();
+            this.ScaleLabel = new System.Windows.Forms.Label();
+            this.BransleyFractal = new System.Windows.Forms.Button();
             this.PointCount = new System.Windows.Forms.NumericUpDown();
             this.PointCountLabel = new System.Windows.Forms.Label();
             this.FractalCoeff = new System.Windows.Forms.NumericUpDown();
@@ -37,21 +44,16 @@
             this.BuildButton = new System.Windows.Forms.Button();
             this.SidesCount = new System.Windows.Forms.NumericUpDown();
             this.SideCountLabel = new System.Windows.Forms.Label();
-            this.BransleyFractal = new System.Windows.Forms.Button();
-            this.Scale = new System.Windows.Forms.NumericUpDown();
-            this.ScaleLabel = new System.Windows.Forms.Label();
-            this.DX = new System.Windows.Forms.NumericUpDown();
-            this.dXLabel = new System.Windows.Forms.Label();
-            this.DY = new System.Windows.Forms.NumericUpDown();
-            this.dYLabel = new System.Windows.Forms.Label();
+            this.LineChecker = new System.Windows.Forms.CheckBox();
+            this.KochFractal = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.Canvas)).BeginInit();
             this.SettingsPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.DY)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DX)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Scale)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PointCount)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.FractalCoeff)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SidesCount)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Scale)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.DX)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.DY)).BeginInit();
             this.SuspendLayout();
             // 
             // Canvas
@@ -68,6 +70,8 @@
             // 
             // SettingsPanel
             // 
+            this.SettingsPanel.Controls.Add(this.KochFractal);
+            this.SettingsPanel.Controls.Add(this.LineChecker);
             this.SettingsPanel.Controls.Add(this.DY);
             this.SettingsPanel.Controls.Add(this.dYLabel);
             this.SettingsPanel.Controls.Add(this.DX);
@@ -88,6 +92,106 @@
             this.SettingsPanel.Size = new System.Drawing.Size(226, 571);
             this.SettingsPanel.TabIndex = 1;
             // 
+            // DY
+            // 
+            this.DY.DecimalPlaces = 4;
+            this.DY.Location = new System.Drawing.Point(94, 130);
+            this.DY.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.DY.Minimum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            -2147483648});
+            this.DY.Name = "DY";
+            this.DY.Size = new System.Drawing.Size(120, 22);
+            this.DY.TabIndex = 5;
+            this.DY.ValueChanged += new System.EventHandler(this.DY_ValueChanged);
+            // 
+            // dYLabel
+            // 
+            this.dYLabel.AutoSize = true;
+            this.dYLabel.Location = new System.Drawing.Point(2, 132);
+            this.dYLabel.Name = "dYLabel";
+            this.dYLabel.Size = new System.Drawing.Size(29, 17);
+            this.dYLabel.TabIndex = 12;
+            this.dYLabel.Text = "dY:";
+            // 
+            // DX
+            // 
+            this.DX.DecimalPlaces = 4;
+            this.DX.Location = new System.Drawing.Point(94, 102);
+            this.DX.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.DX.Minimum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            -2147483648});
+            this.DX.Name = "DX";
+            this.DX.Size = new System.Drawing.Size(120, 22);
+            this.DX.TabIndex = 4;
+            this.DX.ValueChanged += new System.EventHandler(this.DX_ValueChanged);
+            // 
+            // dXLabel
+            // 
+            this.dXLabel.AutoSize = true;
+            this.dXLabel.Location = new System.Drawing.Point(2, 104);
+            this.dXLabel.Name = "dXLabel";
+            this.dXLabel.Size = new System.Drawing.Size(29, 17);
+            this.dXLabel.TabIndex = 10;
+            this.dXLabel.Text = "dX:";
+            // 
+            // Scale
+            // 
+            this.Scale.DecimalPlaces = 2;
+            this.Scale.Location = new System.Drawing.Point(94, 10);
+            this.Scale.Maximum = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
+            this.Scale.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
+            this.Scale.Name = "Scale";
+            this.Scale.Size = new System.Drawing.Size(120, 22);
+            this.Scale.TabIndex = 1;
+            this.Scale.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.Scale.ValueChanged += new System.EventHandler(this.Scale_ValueChanged);
+            // 
+            // ScaleLabel
+            // 
+            this.ScaleLabel.AutoSize = true;
+            this.ScaleLabel.Location = new System.Drawing.Point(2, 12);
+            this.ScaleLabel.Name = "ScaleLabel";
+            this.ScaleLabel.Size = new System.Drawing.Size(51, 17);
+            this.ScaleLabel.TabIndex = 8;
+            this.ScaleLabel.Text = "Scale: ";
+            // 
+            // BransleyFractal
+            // 
+            this.BransleyFractal.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.BransleyFractal.Location = new System.Drawing.Point(0, 485);
+            this.BransleyFractal.Name = "BransleyFractal";
+            this.BransleyFractal.Size = new System.Drawing.Size(226, 43);
+            this.BransleyFractal.TabIndex = 7;
+            this.BransleyFractal.Text = "Bransley Fractal";
+            this.BransleyFractal.UseVisualStyleBackColor = true;
+            this.BransleyFractal.Click += new System.EventHandler(this.BransleyFractal_Click);
+            // 
             // PointCount
             // 
             this.PointCount.Location = new System.Drawing.Point(94, 42);
@@ -97,7 +201,7 @@
             0,
             0});
             this.PointCount.Minimum = new decimal(new int[] {
-            10,
+            1,
             0,
             0,
             0});
@@ -160,7 +264,7 @@
             // 
             // SidesCount
             // 
-            this.SidesCount.Location = new System.Drawing.Point(94, 158);
+            this.SidesCount.Location = new System.Drawing.Point(94, 185);
             this.SidesCount.Maximum = new decimal(new int[] {
             10,
             0,
@@ -184,111 +288,33 @@
             // SideCountLabel
             // 
             this.SideCountLabel.AutoSize = true;
-            this.SideCountLabel.Location = new System.Drawing.Point(2, 160);
+            this.SideCountLabel.Location = new System.Drawing.Point(2, 187);
             this.SideCountLabel.Name = "SideCountLabel";
             this.SideCountLabel.Size = new System.Drawing.Size(86, 17);
             this.SideCountLabel.TabIndex = 0;
             this.SideCountLabel.Text = "Sides count:";
             // 
-            // BransleyFractal
+            // LineChecker
             // 
-            this.BransleyFractal.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.BransleyFractal.Location = new System.Drawing.Point(0, 485);
-            this.BransleyFractal.Name = "BransleyFractal";
-            this.BransleyFractal.Size = new System.Drawing.Size(226, 43);
-            this.BransleyFractal.TabIndex = 7;
-            this.BransleyFractal.Text = "Bransley Fractal";
-            this.BransleyFractal.UseVisualStyleBackColor = true;
-            this.BransleyFractal.Click += new System.EventHandler(this.BransleyFractal_Click);
+            this.LineChecker.AutoSize = true;
+            this.LineChecker.Location = new System.Drawing.Point(94, 158);
+            this.LineChecker.Name = "LineChecker";
+            this.LineChecker.Size = new System.Drawing.Size(59, 21);
+            this.LineChecker.TabIndex = 13;
+            this.LineChecker.Text = "lines";
+            this.LineChecker.UseVisualStyleBackColor = true;
+            this.LineChecker.CheckedChanged += new System.EventHandler(this.LineChecker_CheckedChanged);
             // 
-            // Scale
+            // KochFractal
             // 
-            this.Scale.DecimalPlaces = 2;
-            this.Scale.Location = new System.Drawing.Point(94, 10);
-            this.Scale.Maximum = new decimal(new int[] {
-            1000,
-            0,
-            0,
-            0});
-            this.Scale.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            131072});
-            this.Scale.Name = "Scale";
-            this.Scale.Size = new System.Drawing.Size(120, 22);
-            this.Scale.TabIndex = 1;
-            this.Scale.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.Scale.ValueChanged += new System.EventHandler(this.Scale_ValueChanged);
-            // 
-            // ScaleLabel
-            // 
-            this.ScaleLabel.AutoSize = true;
-            this.ScaleLabel.Location = new System.Drawing.Point(2, 12);
-            this.ScaleLabel.Name = "ScaleLabel";
-            this.ScaleLabel.Size = new System.Drawing.Size(51, 17);
-            this.ScaleLabel.TabIndex = 8;
-            this.ScaleLabel.Text = "Scale: ";
-            // 
-            // DX
-            // 
-            this.DX.DecimalPlaces = 4;
-            this.DX.Location = new System.Drawing.Point(94, 102);
-            this.DX.Maximum = new decimal(new int[] {
-            1000,
-            0,
-            0,
-            0});
-            this.DX.Minimum = new decimal(new int[] {
-            1000,
-            0,
-            0,
-            -2147483648});
-            this.DX.Name = "DX";
-            this.DX.Size = new System.Drawing.Size(120, 22);
-            this.DX.TabIndex = 4;
-            this.DX.ValueChanged += new System.EventHandler(this.DX_ValueChanged);
-            // 
-            // dXLabel
-            // 
-            this.dXLabel.AutoSize = true;
-            this.dXLabel.Location = new System.Drawing.Point(2, 104);
-            this.dXLabel.Name = "dXLabel";
-            this.dXLabel.Size = new System.Drawing.Size(29, 17);
-            this.dXLabel.TabIndex = 10;
-            this.dXLabel.Text = "dX:";
-            // 
-            // DY
-            // 
-            this.DY.DecimalPlaces = 4;
-            this.DY.Location = new System.Drawing.Point(94, 130);
-            this.DY.Maximum = new decimal(new int[] {
-            1000,
-            0,
-            0,
-            0});
-            this.DY.Minimum = new decimal(new int[] {
-            1000,
-            0,
-            0,
-            -2147483648});
-            this.DY.Name = "DY";
-            this.DY.Size = new System.Drawing.Size(120, 22);
-            this.DY.TabIndex = 5;
-            this.DY.ValueChanged += new System.EventHandler(this.DY_ValueChanged);
-            // 
-            // dYLabel
-            // 
-            this.dYLabel.AutoSize = true;
-            this.dYLabel.Location = new System.Drawing.Point(2, 132);
-            this.dYLabel.Name = "dYLabel";
-            this.dYLabel.Size = new System.Drawing.Size(29, 17);
-            this.dYLabel.TabIndex = 12;
-            this.dYLabel.Text = "dY:";
+            this.KochFractal.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.KochFractal.Location = new System.Drawing.Point(0, 442);
+            this.KochFractal.Name = "KochFractal";
+            this.KochFractal.Size = new System.Drawing.Size(226, 43);
+            this.KochFractal.TabIndex = 14;
+            this.KochFractal.Text = "Koch Fractal";
+            this.KochFractal.UseVisualStyleBackColor = true;
+            this.KochFractal.Click += new System.EventHandler(this.KochFractal_Click);
             // 
             // FractalsForm
             // 
@@ -304,12 +330,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.Canvas)).EndInit();
             this.SettingsPanel.ResumeLayout(false);
             this.SettingsPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.DY)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.DX)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Scale)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PointCount)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.FractalCoeff)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.SidesCount)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.Scale)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.DX)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.DY)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -332,6 +358,8 @@
         private System.Windows.Forms.Label dYLabel;
         private System.Windows.Forms.NumericUpDown DX;
         private System.Windows.Forms.Label dXLabel;
+        private System.Windows.Forms.CheckBox LineChecker;
+        private System.Windows.Forms.Button KochFractal;
     }
 }
 
